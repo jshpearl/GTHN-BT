@@ -447,17 +447,30 @@ for lesson_id, tab in lessons_mapping:
         for q in lesson_data['reading'][0:5]:
             q_key = f"ans_{lesson_id}_{q['id']}"
             
-            # Hiển thị hình ảnh minh họa cho câu hỏi nếu có sẵn tệp ảnh trong thư mục
-            # Chuyển đổi ID câu hỏi (16, 17, 18, 19, 20) thành chữ cái (A, B, C, D, E)
+            # Hiển thị hình ảnh minh họa cho câu hỏi hỗ trợ nhiều cách đặt tên ảnh của giáo viên
+            lesson_num = lesson_id.split('_')[1]
             letter_map = {16: 'A', 17: 'B', 18: 'C', 19: 'D', 20: 'E'}
             letter = letter_map.get(q['id'], '')
-            img_question_name = f"B{lesson_id.split('_')[1]}_{letter}.png"
+            
+            # Danh sách các ứng viên đặt tên tệp ảnh (ưu tiên tìm tên file số của cô trước)
+            candidates = [
+                f"B{lesson_num}_{q['id']}.png",         # 1. B6_16.png (Chuẩn gốc cô đang có)
+                f"B{lesson_num}_{q['id']}_{letter}.png",  # 2. B6_16_A.png (Chuẩn tương thích B16_A)
+                f"B{lesson_num}_{q['id']}{letter}.png",   # 3. B6_16A.png
+                f"B{lesson_num}_{letter}.png"             # 4. B6_A.png (Chuẩn rút gọn)
+            ]
+            
+            found_img = None
+            for cand in candidates:
+                if os.path.exists(cand):
+                    found_img = cand
+                    break
             
             with st.container(border=True):
-                if os.path.exists(img_question_name):
-                    st.image(img_question_name, width=220)
+                if found_img:
+                    st.image(found_img, width=220)
                 else:
-                    st.info(f"💡 [Gợi ý giáo viên]: Thêm ảnh đặt tên là '{img_question_name}' vào thư mục để hiển thị hình câu này.")
+                    st.info(f"💡 [Gợi ý giáo viên]: Thêm ảnh đặt tên là '{candidates[0]}' hoặc '{candidates[1]}' vào thư mục để hiển thị hình câu này.")
                 if q_key not in st.session_state:
                     st.session_state[q_key] = "Chưa chọn"
                     
