@@ -443,7 +443,10 @@ for lesson_id, tab in lessons_mapping:
             q_key = f"ans_{lesson_id}_{q['id']}"
             
             # Hiển thị hình ảnh minh họa cho câu hỏi nếu có sẵn tệp ảnh trong thư mục
-            img_question_name = f"B{lesson_id.split('_')[1]}_{q['id']}.png"
+            # Chuyển đổi ID câu hỏi (16, 17, 18, 19, 20) thành chữ cái (A, B, C, D, E)
+            letter_map = {16: 'A', 17: 'B', 18: 'C', 19: 'D', 20: 'E'}
+            letter = letter_map.get(q['id'], '')
+            img_question_name = f"B{lesson_id.split('_')[1]}_{letter}.png"
             if os.path.exists(img_question_name):
                 st.image(img_question_name, width=220)
             else:
