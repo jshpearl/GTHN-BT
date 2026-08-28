@@ -144,7 +144,7 @@ QUESTIONS = {
             # Phần 3 (Câu 11-15): Nghe và chọn đáp án đúng nhất
             {'id': 11, 'type': 'mc', 'options': ['A. 李月 / Lǐ Yuè', 'B. 张东 / Zhāng Dōng', 'C. 玛丽 / Mǎlì'], 'text': '11. 她叫什么名字？', 'audio_part': 3, 'correct': 'A', 'script': '她叫李月，她是老师。\n问：她叫什么名字？', 'explanation': 'Tên cô ấy là "李月". Chọn A.'},
             {'id': 12, 'type': 'mc', 'options': ['A. 我的朋友 / wǒ de péngyou', 'B. 我的哥哥 / wǒ de gēge', 'C. 我的老师 / wǒ de lǎoshī'], 'text': '12. 他是谁？', 'audio_part': 3, 'correct': 'C', 'script': '他是中国人，他是我的汉语老师。\n问：他是谁？', 'explanation': 'Thầy ấy là giáo viên tiếng Hán của tôi (我的汉语老师). Chọn C.'},
-            {'id': 13, 'type': 'mc', 'options': ['A. 星期一 / xīngqīyī', 'B. 星期六 / xīngqīliù', 'C. 星期天 / xīngqītiān'], 'text': '13. 明天星期几？', 'audio_part': 3, 'correct': 'A', 'script': '今天是星期天，我们明天回家。\n问：明天星期几？', 'explanation': 'Barem đáp án chính thức ghi nhận là C.'},
+            {'id': 13, 'type': 'mc', 'options': ['A. 星期一 / xīngqīyī', 'B. 星期六 / xīngqīliù', 'C. 星期天 / xīngqītiān'], 'text': '13. 明天星期几？', 'audio_part': 3, 'correct': 'A', 'script': '今天是星期天， chúng tôi ngày mai về nhà。\n问：明天星期几？', 'explanation': 'Hôm nay là Chủ Nhật (星期天) -> Ngày mai là Thứ Hai (星期一). Chọn A.'},
             {'id': 14, 'type': 'mc', 'options': ['A. 5天 / wǔ tiān', 'B. 3天 / sān tiān', 'C. 7天 / qī tiān'], 'text': '14. 他们一个星期学习几天？', 'audio_part': 3, 'correct': 'A', 'script': '我和朋友来中国学习汉语，我们一個星期学习五天。\n问：他们一个星期学习几天？', 'explanation': 'Học năm ngày (五天). Chọn A.'},
             {'id': 15, 'type': 'mc', 'options': ['A. 喝咖啡 / hē kāfēi', 'B. 学习 / xuéxí', 'C. 去公园 / qù gōngyuán'], 'text': '15. 他在这儿做什么？', 'audio_part': 3, 'correct': 'B', 'script': '我不是北京人，我在这儿学习。\n问：他在这儿做什么？', 'explanation': 'Học tập ở đây (学习). Chọn B.'}
         ],
