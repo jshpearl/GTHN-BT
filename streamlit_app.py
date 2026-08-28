@@ -452,13 +452,29 @@ for lesson_id, tab in lessons_mapping:
             letter_map = {16: 'A', 17: 'B', 18: 'C', 19: 'D', 20: 'E'}
             letter = letter_map.get(q['id'], '')
             
-            # Danh sách các ứng viên đặt tên tệp ảnh (ưu tiên tìm tên file số của cô trước)
-            candidates = [
-                f"B{lesson_num}_{q['id']}.png",         # 1. B6_16.png (Chuẩn gốc cô đang có)
-                f"B{lesson_num}_{q['id']}_{letter}.png",  # 2. B6_16_A.png (Chuẩn tương thích B16_A)
-                f"B{lesson_num}_{q['id']}{letter}.png",   # 3. B6_16A.png
-                f"B{lesson_num}_{letter}.png"             # 4. B6_A.png (Chuẩn rút gọn)
-            ]
+            # Danh sách các ứng viên đặt tên tệp ảnh cực kỳ linh hoạt (hỗ trợ đầy đủ các chuẩn đặt tên của cô Bảo Ngọc)
+            # Thử nghiệm tất cả các trường hợp: hoa/thường, có/không có tiền tố Bài (B6/B7/B8)
+            candidates = []
+            for ext in [".png", ".PNG", ".jpg", ".JPG", ".jpeg", ".JPEG"]:
+                for let in [letter, letter.lower()]:
+                    candidates.extend([
+                        # 1. Định dạng đầy đủ có tiền tố Bài (Ví dụ: B6_16_C.png)
+                        f"B{lesson_num}_16_{let}{ext}",
+                        f"B{lesson_num}_16{let}{ext}",
+                        # 2. Định dạng không có số Bài (Ví dụ: B16_C.png, 16_C.png)
+                        f"B16_{let}{ext}",
+                        f"B16{let}{ext}",
+                        f"16_{let}{ext}",
+                        f"16{let}{ext}",
+                        # 3. Định dạng theo ID câu hỏi thực tế (Ví dụ: B6_18_C.png, B6_18C.png, B6_18.png)
+                        f"B{lesson_num}_{q['id']}_{let}{ext}",
+                        f"B{lesson_num}_{q['id']}{let}{ext}",
+                        f"B{lesson_num}_{q['id']}{ext}",
+                        f"B{lesson_num}_{let}{ext}"
+                    ])
+            # Loại bỏ các tên trùng lặp nhưng vẫn giữ nguyên thứ tự ưu tiên
+            seen = set()
+            candidates = [x for x in candidates if not (x in seen or seen.add(x))]
             
             found_img = None
             for cand in candidates:
@@ -470,7 +486,7 @@ for lesson_id, tab in lessons_mapping:
                 if found_img:
                     st.image(found_img, width=220)
                 else:
-                    st.info(f"💡 [Gợi ý giáo viên]: Thêm ảnh đặt tên là '{candidates[0]}' hoặc '{candidates[1]}' vào thư mục để hiển thị hình câu này.")
+                    st.info(f"💡 [Gợi ý giáo viên]: Thêm ảnh cho câu này vào thư mục, đặt tên là 'B{lesson_num}_16_{letter}.png' hoặc 'B16_{letter}.png' hoặc '16_{letter}.png'")
                 if q_key not in st.session_state:
                     st.session_state[q_key] = "Chưa chọn"
                     
