@@ -74,6 +74,25 @@ st.markdown("""
     #MainMenu {visibility: hidden;}
     .stDeployButton {display: none;}
     footer {visibility: hidden;}
+
+    /* Tối ưu hóa card container của Streamlit có viền hồng pastel bên trái cực đẹp và sắc nét */
+    div[data-testid="stVerticalBlockBorderWrapper"] {
+        background-color: #FFFFFF !important;
+        border: 1px solid #FFE4E1 !important;
+        border-left: 6px solid #FFD1DC !important; /* Viền hồng pastel */
+        border-radius: 16px !important;
+        box-shadow: 0 4px 12px rgba(44, 62, 80, 0.04) !important;
+        padding: 20px !important;
+        margin-bottom: 20px !important;
+    }
+    
+    /* Chữ tiêu đề của expander to và rõ ràng */
+    .streamlit-expanderHeader {
+        font-size: 16px !important;
+        font-weight: bold !important;
+        color: #111111 !important;
+    }
+
 </style>
 """, unsafe_allow_html=True)
 
@@ -220,24 +239,17 @@ QUESTIONS = {
 st.markdown("<h1 class='main-title'>BÀI TẬP GIÁO TRÌNH HÁN NGỮ (1)</h1>", unsafe_allow_html=True)
 st.markdown("<h3 class='sub-title'>Chúc các bạn làm bài vui và hiệu quả nha!</h3>", unsafe_allow_html=True)
 
-# Định nghĩa hàm callback đồng bộ tên học sinh cực kỳ ổn định và chống lỗi gửi bài
-def sync_student_name(lesson_id):
-    key = f"name_input_{lesson_id}"
-    val = st.session_state[key].strip()
-    st.session_state["student_name"] = val
-    for l_id in ['bai_8', 'bai_7', 'bai_6']:
-        st.session_state[f"name_input_{l_id}"] = val
-
-# Khởi tạo student_name trong session_state
+# Một ô nhập tên DUY NHẤT nằm ở ngay đầu trang (ngoài các Tab) giúp học sinh nhập 1 lần là áp dụng cho tất cả các bài tập cực kỳ tiện lợi và chống lỗi
 if "student_name" not in st.session_state:
     st.session_state["student_name"] = ""
 
-# Đảm bảo các ô nhập tên được khởi tạo sẵn trong session_state
-for l_id in ['bai_8', 'bai_7', 'bai_6']:
-    if f"name_input_{l_id}" not in st.session_state:
-        st.session_state[f"name_input_{l_id}"] = ""
+student_name = st.text_input(
+    "📝 NHẬP HỌ VÀ TÊN CỦA BẠN ĐỂ BẮT ĐẦU LÀM BÀI TẬP:",
+    value=st.session_state["student_name"],
+    key="student_name_input_global"
+).strip()
 
-student_name = st.session_state["student_name"]
+st.session_state["student_name"] = student_name
 
 # Thiết lập tabs: Bài mới nhất luôn ở bên trái ngoài cùng (Bài 8 -> Bài 7 -> Bài 6)
 tabs = st.tabs(["📚 BÀI 8", "📚 BÀI 7", "📚 BÀI 6"])
@@ -283,14 +295,11 @@ for lesson_id, tab in lessons_mapping:
         lesson_data = QUESTIONS[lesson_id]
         st.markdown(f"<div class='lesson-banner'>{lesson_data['title']}</div>", unsafe_allow_html=True)
         
-        # Đồng bộ ô nhập tên học sinh trên từng bộ đề tự động sử dụng callback 100% ổn định
-        student_name = st.text_input(
-            "📝 Nhập Họ và tên của bạn để làm bài tập:",
-            key=f"name_input_{lesson_id}",
-            on_change=sync_student_name,
-            args=(lesson_id,),
-            disabled=st.session_state.get(f"submitted_{lesson_id}", False)
-        )
+        # Hiển thị trạng thái tên học sinh làm bài nổi bật ở mỗi tab
+        if student_name:
+            st.success(f"👤 **Học sinh đang làm bài**: **{student_name.upper()}**")
+        else:
+            st.warning("⚠️ **Bạn vui lòng cuộn lên đầu trang và nhập Họ và tên để bắt đầu làm bài nhé!**")
         
         # Biến trạng thái nộp bài của bài cụ thể
         is_submitted = st.session_state[f"submitted_{lesson_id}"]
@@ -314,36 +323,34 @@ for lesson_id, tab in lessons_mapping:
             if q_key not in st.session_state:
                 st.session_state[q_key] = "Chưa chọn"
                 
-            st.markdown(f"<div class='quiz-card'>", unsafe_allow_html=True)
-            
-            # Hiển thị hình ảnh minh họa cho câu nghe 1 nếu có sẵn tệp ảnh trong thư mục
-            img_path = f"B{lesson_id.split('_')[1]}_{q['id']}.png"
-            if os.path.exists(img_path):
-                st.image(img_path, width=220)
-            else:
-                st.info(f"💡 [Gợi ý giáo viên]: Thêm ảnh đặt tên là '{img_path}' vào thư mục để hiển thị hình câu này.")
-                
-            st.markdown(f"**{q['id']}.**")
-            
-            selected_option = st.radio(
-                "Lựa chọn của bạn:",
-                ["Chưa chọn", "Đúng (✓)", "Sai (✗)"],
-                index=["Chưa chọn", "Đúng (✓)", "Sai (✗)"].index(st.session_state[q_key]),
-                key=f"widget_{lesson_id}_{q['id']}",
-                disabled=is_submitted
-            )
-            st.session_state[q_key] = selected_option
-            
-            if is_submitted:
-                is_correct = (selected_option == q['correct'])
-                if is_correct:
-                    st.success("🎉 Chính xác!")
+            with st.container(border=True):
+                # Hiển thị hình ảnh minh họa cho câu nghe 1 nếu có sẵn tệp ảnh trong thư mục
+                img_path = f"B{lesson_id.split('_')[1]}_{q['id']}.png"
+                if os.path.exists(img_path):
+                    st.image(img_path, width=220)
                 else:
-                    st.error(f"❌ Chưa đúng! Đáp án đúng: **{q['correct']}**")
-                with st.expander("📖 Xem Script Nghe & Giải thích"):
-                    st.markdown(f"**Script nghe:**\n{q['script']}")
-                    st.markdown(f"**Giải thích:** {q['explanation']}")
-            st.markdown("</div>", unsafe_allow_html=True)
+                    st.info(f"💡 [Gợi ý giáo viên]: Thêm ảnh đặt tên là '{img_path}' vào thư mục để hiển thị hình câu này.")
+                    
+                st.markdown(f"**{q['id']}.**")
+                
+                selected_option = st.radio(
+                    "Lựa chọn của bạn:",
+                    ["Chưa chọn", "Đúng (✓)", "Sai (✗)"],
+                    index=["Chưa chọn", "Đúng (✓)", "Sai (✗)"].index(st.session_state[q_key]),
+                    key=f"widget_{lesson_id}_{q['id']}",
+                    disabled=is_submitted
+                )
+                st.session_state[q_key] = selected_option
+                
+                if is_submitted:
+                    is_correct = (selected_option == q['correct'])
+                    if is_correct:
+                        st.success("🎉 Chính xác!")
+                    else:
+                        st.error(f"❌ Chưa đúng! Đáp án đúng: **{q['correct']}**")
+                    with st.expander("📖 Xem Script Nghe & Giải thích"):
+                        st.markdown(f"**Script nghe:**\n{q['script']}")
+                        st.markdown(f"**Giải thích:** {q['explanation']}")
             
         st.write("---")
         
@@ -368,28 +375,27 @@ for lesson_id, tab in lessons_mapping:
             if q_key not in st.session_state:
                 st.session_state[q_key] = "Chưa chọn"
                 
-            st.markdown("<div class='quiz-card'>", unsafe_allow_html=True)
-            st.markdown(f"**{q['id']}.**") # In đậm cực kì ngắn gọn
-            
-            selected_option = st.selectbox(
-                "Nối với hình (A - F):",
-                ["Chưa chọn"] + q['options'],
-                index=(["Chưa chọn"] + q['options']).index(st.session_state[q_key]),
-                key=f"widget_{lesson_id}_{q['id']}",
-                disabled=is_submitted
-            )
-            st.session_state[q_key] = selected_option
-            
-            if is_submitted:
-                is_correct = (selected_option == q['correct'])
-                if is_correct:
-                    st.success("🎉 Chính xác!")
-                else:
-                    st.error(f"❌ Chưa đúng! Đáp án đúng: **{q['correct']}**")
-                with st.expander("📖 Xem Script Nghe & Giải thích"):
-                    st.markdown(f"**Script nghe:**\n{q['script']}")
-                    st.markdown(f"**Giải thích:** {q['explanation']}")
-            st.markdown("</div>", unsafe_allow_html=True)
+            with st.container(border=True):
+                st.markdown(f"**{q['id']}.**") # In đậm cực kì ngắn gọn
+                
+                selected_option = st.selectbox(
+                    "Nối với hình (A - F):",
+                    ["Chưa chọn"] + q['options'],
+                    index=(["Chưa chọn"] + q['options']).index(st.session_state[q_key]),
+                    key=f"widget_{lesson_id}_{q['id']}",
+                    disabled=is_submitted
+                )
+                st.session_state[q_key] = selected_option
+                
+                if is_submitted:
+                    is_correct = (selected_option == q['correct'])
+                    if is_correct:
+                        st.success("🎉 Chính xác!")
+                    else:
+                        st.error(f"❌ Chưa đúng! Đáp án đúng: **{q['correct']}**")
+                    with st.expander("📖 Xem Script Nghe & Giải thích"):
+                        st.markdown(f"**Script nghe:**\n{q['script']}")
+                        st.markdown(f"**Giải thích:** {q['explanation']}")
             
         st.write("---")
         
@@ -406,29 +412,28 @@ for lesson_id, tab in lessons_mapping:
             if q_key not in st.session_state:
                 st.session_state[q_key] = "Chưa chọn"
                 
-            st.markdown("<div class='quiz-card'>", unsafe_allow_html=True)
-            st.markdown(f"**{q['id']}.**") # In đậm câu hỏi
-            
-            selected_option = st.radio(
-                "Chọn đáp án đúng (A/B/C):",
-                ["Chưa chọn"] + q['options'],
-                index=(["Chưa chọn"] + q['options']).index(st.session_state[q_key]),
-                key=f"widget_{lesson_id}_{q['id']}",
-                disabled=is_submitted
-            )
-            st.session_state[q_key] = selected_option
-            
-            if is_submitted:
-                # Check if starts with correct letter (e.g. "C. 米饭 / mǐfàn" starts with "C")
-                is_correct = selected_option.startswith(q['correct'])
-                if is_correct:
-                    st.success("🎉 Chính xác!")
-                else:
-                    st.error(f"❌ Chưa đúng! Đáp án đúng: **{q['correct']}**")
-                with st.expander("📖 Xem Script Nghe & Giải thích"):
-                    st.markdown(f"**Script nghe:**\n{q['script']}")
-                    st.markdown(f"**Giải thích:** {q['explanation']}")
-            st.markdown("</div>", unsafe_allow_html=True)
+            with st.container(border=True):
+                st.markdown(f"**{q['id']}.**") # In đậm câu hỏi
+                
+                selected_option = st.radio(
+                    "Chọn đáp án đúng (A/B/C):",
+                    ["Chưa chọn"] + q['options'],
+                    index=(["Chưa chọn"] + q['options']).index(st.session_state[q_key]),
+                    key=f"widget_{lesson_id}_{q['id']}",
+                    disabled=is_submitted
+                )
+                st.session_state[q_key] = selected_option
+                
+                if is_submitted:
+                    # Check if starts with correct letter (e.g. "C. 米饭 / mǐfàn" starts with "C")
+                    is_correct = selected_option.startswith(q['correct'])
+                    if is_correct:
+                        st.success("🎉 Chính xác!")
+                    else:
+                        st.error(f"❌ Chưa đúng! Đáp án đúng: **{q['correct']}**")
+                    with st.expander("📖 Xem Script Nghe & Giải thích"):
+                        st.markdown(f"**Script nghe:**\n{q['script']}")
+                        st.markdown(f"**Giải thích:** {q['explanation']}")
             
         st.markdown("<br><br>", unsafe_allow_html=True)
         
@@ -447,34 +452,34 @@ for lesson_id, tab in lessons_mapping:
             letter_map = {16: 'A', 17: 'B', 18: 'C', 19: 'D', 20: 'E'}
             letter = letter_map.get(q['id'], '')
             img_question_name = f"B{lesson_id.split('_')[1]}_{letter}.png"
-            if os.path.exists(img_question_name):
-                st.image(img_question_name, width=220)
-            else:
-                st.info(f"💡 [Gợi ý giáo viên]: Thêm ảnh đặt tên là '{img_question_name}' vào thư mục để hiển thị hình câu này.")
-            if q_key not in st.session_state:
-                st.session_state[q_key] = "Chưa chọn"
-                
-            st.markdown("<div class='quiz-card'>", unsafe_allow_html=True)
-            st.markdown(f"**{q['text']}**") # In đậm câu hỏi
             
-            selected_option = st.radio(
-                "Lựa chọn của bạn:",
-                ["Chưa chọn", "Đúng (✓)", "Sai (✗)"],
-                index=["Chưa chọn", "Đúng (✓)", "Sai (✗)"].index(st.session_state[q_key]),
-                key=f"widget_{lesson_id}_{q['id']}",
-                disabled=is_submitted
-            )
-            st.session_state[q_key] = selected_option
-            
-            if is_submitted:
-                is_correct = (selected_option == q['correct'])
-                if is_correct:
-                    st.success("🎉 Chính xác!")
+            with st.container(border=True):
+                if os.path.exists(img_question_name):
+                    st.image(img_question_name, width=220)
                 else:
-                    st.error(f"❌ Chưa đúng! Đáp án đúng: **{q['correct']}**")
-                with st.expander("📖 Xem Giải thích chi tiết"):
-                    st.markdown(f"**Giải thích:** {q['explanation']}")
-            st.markdown("</div>", unsafe_allow_html=True)
+                    st.info(f"💡 [Gợi ý giáo viên]: Thêm ảnh đặt tên là '{img_question_name}' vào thư mục để hiển thị hình câu này.")
+                if q_key not in st.session_state:
+                    st.session_state[q_key] = "Chưa chọn"
+                    
+                st.markdown(f"**{q['text']}**") # In đậm câu hỏi
+                
+                selected_option = st.radio(
+                    "Lựa chọn của bạn:",
+                    ["Chưa chọn", "Đúng (✓)", "Sai (✗)"],
+                    index=["Chưa chọn", "Đúng (✓)", "Sai (✗)"].index(st.session_state[q_key]),
+                    key=f"widget_{lesson_id}_{q['id']}",
+                    disabled=is_submitted
+                )
+                st.session_state[q_key] = selected_option
+                
+                if is_submitted:
+                    is_correct = (selected_option == q['correct'])
+                    if is_correct:
+                        st.success("🎉 Chính xác!")
+                    else:
+                        st.error(f"❌ Chưa đúng! Đáp án đúng: **{q['correct']}**")
+                    with st.expander("📖 Xem Giải thích chi tiết"):
+                        st.markdown(f"**Giải thích:** {q['explanation']}")
             
         st.write("---")
         
@@ -485,27 +490,26 @@ for lesson_id, tab in lessons_mapping:
             if q_key not in st.session_state:
                 st.session_state[q_key] = "Chưa chọn"
                 
-            st.markdown("<div class='quiz-card'>", unsafe_allow_html=True)
-            st.markdown(f"**{q['text']}**") # In đậm câu hỏi
-            
-            selected_option = st.selectbox(
-                "Nối đáp án đúng:",
-                ["Chưa chọn"] + q['options'],
-                index=(["Chưa chọn"] + q['options']).index(st.session_state[q_key]),
-                key=f"widget_{lesson_id}_{q['id']}",
-                disabled=is_submitted
-            )
-            st.session_state[q_key] = selected_option
-            
-            if is_submitted:
-                is_correct = selected_option.startswith(q['correct'])
-                if is_correct:
-                    st.success("🎉 Chính xác!")
-                else:
-                    st.error(f"❌ Chưa đúng! Đáp án đúng: **{q['correct']}**")
-                with st.expander("📖 Xem Giải thích chi tiết"):
-                    st.markdown(f"**Giải thích:** {q['explanation']}")
-            st.markdown("</div>", unsafe_allow_html=True)
+            with st.container(border=True):
+                st.markdown(f"**{q['text']}**") # In đậm câu hỏi
+                
+                selected_option = st.selectbox(
+                    "Nối đáp án đúng:",
+                    ["Chưa chọn"] + q['options'],
+                    index=(["Chưa chọn"] + q['options']).index(st.session_state[q_key]),
+                    key=f"widget_{lesson_id}_{q['id']}",
+                    disabled=is_submitted
+                )
+                st.session_state[q_key] = selected_option
+                
+                if is_submitted:
+                    is_correct = selected_option.startswith(q['correct'])
+                    if is_correct:
+                        st.success("🎉 Chính xác!")
+                    else:
+                        st.error(f"❌ Chưa đúng! Đáp án đúng: **{q['correct']}**")
+                    with st.expander("📖 Xem Giải thích chi tiết"):
+                        st.markdown(f"**Giải thích:** {q['explanation']}")
             
         st.write("---")
         
@@ -526,27 +530,26 @@ for lesson_id, tab in lessons_mapping:
             if q_key not in st.session_state:
                 st.session_state[q_key] = "Chưa chọn"
                 
-            st.markdown("<div class='quiz-card'>", unsafe_allow_html=True)
-            st.markdown(f"**{q['text']}**") # In đậm câu hỏi
-            
-            selected_option = st.selectbox(
-                "Chọn từ điền trống (A - F):",
-                ["Chưa chọn"] + q['options'],
-                index=(["Chưa chọn"] + q['options']).index(st.session_state[q_key]),
-                key=f"widget_{lesson_id}_{q['id']}",
-                disabled=is_submitted
-            )
-            st.session_state[q_key] = selected_option
-            
-            if is_submitted:
-                is_correct = selected_option.startswith(q['correct'])
-                if is_correct:
-                    st.success("🎉 Chính xác!")
-                else:
-                    st.error(f"❌ Chưa đúng! Đáp án đúng: **{q['correct']}**")
-                with st.expander("📖 Xem Giải thích chi tiết"):
-                    st.markdown(f"**Giải thích:** {q['explanation']}")
-            st.markdown("</div>", unsafe_allow_html=True)
+            with st.container(border=True):
+                st.markdown(f"**{q['text']}**") # In đậm câu hỏi
+                
+                selected_option = st.selectbox(
+                    "Chọn từ điền trống (A - F):",
+                    ["Chưa chọn"] + q['options'],
+                    index=(["Chưa chọn"] + q['options']).index(st.session_state[q_key]),
+                    key=f"widget_{lesson_id}_{q['id']}",
+                    disabled=is_submitted
+                )
+                st.session_state[q_key] = selected_option
+                
+                if is_submitted:
+                    is_correct = selected_option.startswith(q['correct'])
+                    if is_correct:
+                        st.success("🎉 Chính xác!")
+                    else:
+                        st.error(f"❌ Chưa đúng! Đáp án đúng: **{q['correct']}**")
+                    with st.expander("📖 Xem Giải thích chi tiết"):
+                        st.markdown(f"**Giải thích:** {q['explanation']}")
             
         st.write("---")
         
