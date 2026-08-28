@@ -95,9 +95,9 @@ QUESTIONS = {
             {'id': 4, 'type': 'tf', 'text': '4. 朋友 / Péngyou', 'audio_part': 1, 'correct': 'Sai (✗)', 'script': '朋友 (Péngyou)', 'explanation': 'Nội dung hình ảnh và cụm từ "朋友" không đồng nhất.'},
             {'id': 5, 'type': 'tf', 'text': '5. 请喝茶 / Qǐng hē chá', 'audio_part': 1, 'correct': 'Đúng (✓)', 'script': '请喝茶 (Qǐng hē chá)', 'explanation': 'Audio phát chính xác cụm từ "请喝茶" (Mời uống trà).'},            # Phần 2 (Câu 6-10): Nghe đối thoại, nối hình
             {'id': 6, 'type': 'mc', 'options': ['A', 'B', 'C', 'D', 'E', 'F'], 'text': '6. ', 'audio_part': 2, 'correct': 'D', 'script': '男：他叫什么名字？\n女：他叫大卫。他是美国人。', 'explanation': 'Hội thoại nhắc đến David - người Mỹ (Hình D).'},
-            {'id': 7, 'type': 'mc', 'options': ['A', 'B', 'C', 'D', 'E', 'F'], 'text': '7. ', 'audio_part': 2, 'correct': 'B', 'script': '男：你想吃米饭吗？\n女：我想 eat。', 'explanation': 'Hội thoại nhắc đến muốn ăn cơm (米饭), khớp với hình B.'},
+            {'id': 7, 'type': 'mc', 'options': ['A', 'B', 'C', 'D', 'E', 'F'], 'text': '7. ', 'audio_part': 2, 'correct': 'B', 'script': '男：你想吃米饭吗？\n女：我想吃。', 'explanation': 'Hội thoại nhắc đến muốn ăn cơm (米饭), khớp với hình B.'},
             {'id': 8, 'type': 'mc', 'options': ['A', 'B', 'C', 'D', 'E', 'F'], 'text': '8. ', 'audio_part': 2, 'correct': 'F', 'script': '男：中午你去哪儿吃饭？\n女：我去学生食堂。', 'explanation': 'Nhân vật nữ trả lời đi ăn cơm ở nhà ăn sinh viên (学生食堂), khớp hình F.'},
-            {'id': 9, 'type': 'mc', 'options': ['A', 'B', 'C', 'D', 'E', 'F'], 'text': '9. ', 'audio_part': 2, 'correct': 'A', 'script': '男：我请你喝 coffee 怎么样？\n女：太好了，谢谢！', 'explanation': 'Mời uống cà phê (喝咖啡), khớp hình A.'},
+            {'id': 9, 'type': 'mc', 'options': ['A', 'B', 'C', 'D', 'E', 'F'], 'text': '9. ', 'audio_part': 2, 'correct': 'A', 'script': '男：我请你喝咖啡 怎么样？\n女：太好了，谢谢！', 'explanation': 'Mời uống cà phê (喝咖啡), khớp hình A.'},
             {'id': 10, 'type': 'mc', 'options': ['A', 'B', 'C', 'D', 'E', 'F'], 'text': '10. ', 'audio_part': 2, 'correct': 'E', 'script': '男：老师，您叫什么名字？\n女：我叫李月。', 'explanation': 'Học sinh hỏi tên giáo viên và cô trả lời Lý Nguyệt (李月), khớp hình E.'},            # Phần 3 (Câu 11-15): Nghe và chọn đáp án đúng nhất
             {'id': 11, 'type': 'mc', 'options': ['A. 包子 / bāozi', 'B. 面条儿 / miàntiáor', 'C. 米饭 / mǐfàn'], 'text': '11. 他不想吃什么？', 'audio_part': 3, 'correct': 'C', 'script': '我这几天中午吃的都是米饭，不想吃了。\n问：他不想吃什么？', 'explanation': 'Nhân vật nam nói đã chán ăn cơm (米饭). Chọn C.'},
             {'id': 12, 'type': 'mc', 'options': ['A. 美国人 / Měiguó rén', 'B. 中国人 / Zhōngguó rén', 'C. 日本人 / Rìběn rén'], 'text': '12. 他是哪国人？', 'audio_part': 3, 'correct': 'B', 'script': '他叫王心，他是中国人。\n问：他是哪国人？', 'explanation': 'Vương Tâm là người Trung Quốc (中国人). Chọn B.'},
@@ -157,10 +157,10 @@ QUESTIONS = {
             {'id': 20, 'type': 'tf', 'text': '20. xuéxí / 学习', 'correct': 'Đúng (✓)', 'explanation': 'Hình ảnh đọc sách ôn bài.'},
             # Phần 2 (Câu 21-25): Phối hợp câu hỏi - câu trả lời
             {'id': 21, 'type': 'mc', 'options': ['A. 她叫玛丽。 / Tā jiào Mǎlì.', 'B. 他是我的朋友。 / Tā shì wǒ de péngyou.', 'C. 他是法国人。 / Tā shì Fǎguó rén.', 'D. 我姓王。 / Wǒ xìng Wáng.', 'E. 我学习英语。 / Wǒ xuéxí Yīngyǔ.'], 'text': '21. 他是哪国人？ / Tā shì nǎ guó rén?', 'correct': 'C', 'explanation': 'Hỏi quốc tịch anh ấy -> Anh ấy là người Pháp (法国人).'},
-            {'id': 22, 'type': 'mc', 'options': ['A. 她叫玛丽。 / Tā jiào Mǎlì.', 'B. 他es我的朋友。 / Tā shì wǒ de péngyou.', 'C. 他es法国人。 / Tā shì Fǎguó rén.', 'D. 我姓王。 / Wǒ xìng Wáng.', 'E. 我学习英语。 / Wǒ xuéxí Yīngyǔ.'], 'text': '22. 她叫什么名字？ / Tā jiào shénme míngzi?', 'correct': 'A', 'explanation': 'Hỏi tên cô ấy -> Cô ấy tên Mary (玛丽).'},
-            {'id': 23, 'type': 'mc', 'options': ['A. 她叫玛丽。 / Tā jiào Mǎlì.', 'B. 他es我的朋友。 / Tā shì wǒ de péngyou.', 'C. 他es法国人。 / Tā shì Fǎguó rén.', 'D. 我姓王。 / Wǒ xìng Wáng.', 'E. 我学习英语。 / Wǒ xuéxí Yīngyǔ.'], 'text': '23. 你学习什么？ / Nǐ xuéxí shénme?', 'correct': 'E', 'explanation': 'Hỏi bạn học gì -> Tôi học tiếng Anh (英语).'},
-            {'id': 24, 'type': 'mc', 'options': ['A. 她叫玛丽。 / Tā jiào Mǎlì.', 'B. 他es我的朋友。 / Tā shì wǒ de péngyou.', 'C. 他es法国人。 / Tā shì Fǎguó rén.', 'D. 我姓王。 / Wǒ xìng Wáng.', 'E. 我学习英语。 / Wǒ xuéxí Yīngyǔ.'], 'text': '24. 他是谁？ / Tā shì shuí?', 'correct': 'B', 'explanation': 'Hỏi anh ấy là ai -> Anh ấy là bạn tôi (我的朋友).'},
-            {'id': 25, 'type': 'mc', 'options': ['A. 她叫玛丽。 / Tā jiào Mǎlì.', 'B. 他es我的朋友。 / Tā shì wǒ de péngyou.', 'C. 他es法国人。 / Tā shì Fǎguó rén.', 'D. 我姓王。 / Wǒ xìng Wáng.', 'E. 我学习英语。 / Wǒ xuéxí Yīngyǔ.'], 'text': '25. 请问，您贵姓？ / Qǐngwèn, nín guìxìng?', 'correct': 'D', 'explanation': 'Hỏi họ lịch sự -> Tôi họ Vương (姓王).'},
+            {'id': 22, 'type': 'mc', 'options': ['A. 她叫玛丽。 / Tā jiào Mǎlì.', 'B. 他是我的朋友。 / Tā shì wǒ de péngyou.', 'C. 他是法国人。 / Tā shì Fǎguó rén.', 'D. 我姓王。 / Wǒ xìng Wáng.', 'E. 我学习英语。 / Wǒ xuéxí Yīngyǔ.'], 'text': '22. 她叫什么名字？ / Tā jiào shénme míngzi?', 'correct': 'A', 'explanation': 'Hỏi tên cô ấy -> Cô ấy tên Mary (玛丽).'},
+            {'id': 23, 'type': 'mc', 'options': ['A. 她叫玛丽。 / Tā jiào Mǎlì.', 'B. 他是我的朋友。 / Tā shì wǒ de péngyou.', 'C. 他是法国人。 / Tā shì Fǎguó rén.', 'D. 我姓王。 / Wǒ xìng Wáng.', 'E. 我学习英语。 / Wǒ xuéxí Yīngyǔ.'], 'text': '23. 你学习什么？ / Nǐ xuéxí shénme?', 'correct': 'E', 'explanation': 'Hỏi bạn học gì -> Tôi học tiếng Anh (英语).'},
+            {'id': 24, 'type': 'mc', 'options': ['A. 她叫玛丽。 / Tā jiào Mǎlì.', 'B. 他是我的朋友。 / Tā shì wǒ de péngyou.', 'C. 他是法国人。 / Tā shì Fǎguó rén.', 'D. 我姓王。 / Wǒ xìng Wáng.', 'E. 我学习英语。 / Wǒ xuéxí Yīngyǔ.'], 'text': '24. 他是谁？ / Tā shì shuí?', 'correct': 'B', 'explanation': 'Hỏi anh ấy là ai -> Anh ấy là bạn tôi (我的朋友).'},
+            {'id': 25, 'type': 'mc', 'options': ['A. 她叫玛丽。 / Tā jiào Mǎlì.', 'B. 他是我的朋友。 / Tā shì wǒ de péngyou.', 'C. 他是法国人。 / Tā shì Fǎguó rén.', 'D. 我姓王。 / Wǒ xìng Wáng.', 'E. 我学习英语。 / Wǒ xuéxí Yīngyǔ.'], 'text': '25. 请问，您贵姓？ / Qǐngwèn, nín guìxìng?', 'correct': 'D', 'explanation': 'Hỏi họ lịch sự -> Tôi họ Vương (姓王).'},
             # Phần 3 (Câu 26-30): Điền từ vào chỗ trống
             {'id': 26, 'type': 'mc', 'options': ['A. 叫 / jiào', 'B. 太 / tài', 'C. 美国 / Měiguó', 'D. 名字 / míngzi', 'E. 的 / de', 'F. 学校 / xuéxiào'], 'text': '26. 我学习汉语，汉语不（  ）难。', 'correct': 'B', 'explanation': 'Tiếng Hán không khó lắm (不太难).'},
             {'id': 27, 'type': 'mc', 'options': ['A. 叫 / jiào', 'B. 太 / tài', 'C. 美国 / Měiguó', 'D. 名字 / míngzi', 'E. 的 / de', 'F. 学校 / xuéxiào'], 'text': '27. 他是我的朋友，他是（  ）人。', 'correct': 'C', 'explanation': 'Anh ấy là người Mỹ (美国人).'},
@@ -203,7 +203,7 @@ QUESTIONS = {
             {'id': 22, 'type': 'mc', 'options': ['A. 我去邮局。 / Wǒ qù yóujú.', 'B. 这是英文杂志。 / Zhè shì Yīngwén zázhì.', 'C. 今天星期四。 / Jīntiān xīngqīsì.', 'D. 我喝咖啡。 / Wǒ hē kāfēi.', 'E. 那是我妈妈的书。 / Nà shì wǒ māma de shū.'], 'text': '22. 你去哪儿？ / Nǐ qù nǎr?', 'correct': 'A', 'explanation': 'Tôi đi bưu điện (我去邮局).'},
             {'id': 23, 'type': 'mc', 'options': ['A. 我去邮局。 / Wǒ qù yóujú.', 'B. 这是英文杂志。 / Zhè shì Yīngwén zázhì.', 'C. 今天星期四。 / Jīntiān xīngqīsì.', 'D. 我喝咖啡。 / Wǒ hē kāfēi.', 'E. 那是我妈妈的书。 / Nà shì wǒ māma de shū.'], 'text': '23. 这是什么杂志？ / Zhè shì shénme zázhì?', 'correct': 'B', 'explanation': 'Đây là tạp chí tiếng Anh (这是英文杂志).'},
             {'id': 24, 'type': 'mc', 'options': ['A. 我去邮局。 / Wǒ qù yóujú.', 'B. 这是英文杂志。 / Zhè shì Yīngwén zázhì.', 'C. 今天星期四。 / Jīntiān xīngqīsì.', 'D. 我喝咖啡。 / Wǒ hē kāfēi.', 'E. 那是我妈妈的书。 / Nà shì wǒ māma de shū.'], 'text': '24. 今天星期几？ / Jīntiān xīngqī jǐ?', 'correct': 'C', 'explanation': 'Hôm nay là Thứ Năm (今天星期四).'},
-            {'id': 25, 'type': 'mc', 'options': ['A. 我去邮局。 / Wǒ qù yóujú.', 'B. 这是英文杂志。 / Zhè shì Yīngwén zázhì.', 'C. 今天星期 ấm. / Jīntiān xīngqīsì.', 'D. 我喝咖啡。 / Wǒ hē kāfēi.', 'E. 那是我妈妈的书。 / Nà shì wǒ māma de shū.'], 'text': '25. 那是谁的书？ / Nà shì shuí de shū?', 'correct': 'E', 'explanation': 'Đó là sách của mẹ tôi (那是我妈妈的书).'},
+            {'id': 25, 'type': 'mc', 'options': ['A. 我去邮局。 / Wǒ qù yóujú.', 'B. 这是英文杂志。 / Zhè shì Yīngwén zázhì.', 'C. 今天星期四。 / Jīntiān xīngqīsì.', 'D. 我喝咖啡。 / Wǒ hē kāfēi.', 'E. 那是我妈妈的书。 / Nà shì wǒ māma de shū.'], 'text': '25. 那是谁的书？ / Nà shì shuí de shū?', 'correct': 'E', 'explanation': 'Đó là sách của mẹ tôi (那是我妈妈的书).'},
             # Phần 3 (Câu 26-30): Điền từ vào chỗ trống
             {'id': 26, 'type': 'mc', 'options': ['A. 忙 / máng', 'B. 谁 / shuí', 'C. 学校 / xuéxiào', 'D. 名字 / míngzi', 'E. 进 / jìn', 'F. 星期天 / xīngqītiān'], 'text': '26. 这是（  ）的信？', 'correct': 'B', 'explanation': 'Thư của ai (谁的信).'},
             {'id': 27, 'type': 'mc', 'options': ['A. 忙 / máng', 'B. 谁 / shuí', 'C. 学校 / xuéxiào', 'D. 名字 / míngzi', 'E. 进 / jìn', 'F. 星期天 / xīngqītiān'], 'text': '27. 我妈妈是老师, 她很（  ）。', 'correct': 'A', 'explanation': 'Mẹ rất bận (很忙).'},
@@ -355,17 +355,13 @@ for lesson_id, tab in lessons_mapping:
         except Exception:
             st.warning(f"Chưa tìm thấy file âm thanh {audio_file_2} trong thư mục.")
             
-        # Hiển thị tất cả 6 hình ảnh lựa chọn (A-F) một lần duy nhất nằm ngang để học sinh đối chiếu
+        # Hiển thị 1 hình ảnh ghép chứa toàn bộ các lựa chọn (A-F) để học sinh đối chiếu
         st.markdown("**🖼️ Hình ảnh lựa chọn (A - F):**")
-        cols = st.columns(6)
-        img_letters = ['A', 'B', 'C', 'D', 'E', 'F']
-        for idx, letter in enumerate(img_letters):
-            with cols[idx]:
-                img_path = f"B{lesson_id.split('_')[1]}_{letter}.png"
-                if os.path.exists(img_path):
-                    st.image(img_path, caption=f"Hình {letter}", use_container_width=True)
-                else:
-                    st.info(f"💡 Ảnh {letter} ({img_path})")
+        img_part2_path = f"B{lesson_id.split('_')[1]}_listen2.png"
+        if os.path.exists(img_part2_path):
+            st.image(img_part2_path, use_container_width=True)
+        else:
+            st.info(f"💡 [Gợi ý giáo viên]: Thêm 1 ảnh ghép chứa tất cả các tranh lựa chọn và đặt tên là '{img_part2_path}' vào thư mục.")
 
         for q in lesson_data['listening'][5:10]:
             q_key = f"ans_{lesson_id}_{q['id']}"
