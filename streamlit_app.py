@@ -453,11 +453,11 @@ for lesson_id, tab in lessons_mapping:
             letter = letter_map.get(q['id'], '')
             
             # Danh sách các ứng viên đặt tên tệp ảnh cực kỳ linh hoạt (hỗ trợ đầy đủ các chuẩn đặt tên của cô Bảo Ngọc)
-            # Thử nghiệm tất cả các trường hợp: hoa/thường, có/không có tiền tố Bài (B6/B7/B8)
+            # Thử nghiệm tất cả các trường hợp: hoa/thường, dấu gạch dưới (_) / gạch ngang (-), có/không có tiền tố Bài (B6/B7/B8)
             candidates = []
             for ext in [".png", ".PNG", ".jpg", ".JPG", ".jpeg", ".JPEG"]:
                 for let in [letter, letter.lower()]:
-                    candidates.extend([
+                    base_cands = [
                         # 1. Định dạng đầy đủ có tiền tố Bài (Ví dụ: B6_16_C.png)
                         f"B{lesson_num}_16_{let}{ext}",
                         f"B{lesson_num}_16{let}{ext}",
@@ -471,7 +471,10 @@ for lesson_id, tab in lessons_mapping:
                         f"B{lesson_num}_{q['id']}{let}{ext}",
                         f"B{lesson_num}_{q['id']}{ext}",
                         f"B{lesson_num}_{let}{ext}"
-                    ])
+                    ]
+                    for bc in base_cands:
+                        candidates.append(bc)
+                        candidates.append(bc.replace("_", "-"))
             # Loại bỏ các tên trùng lặp nhưng vẫn giữ nguyên thứ tự ưu tiên
             seen = set()
             candidates = [x for x in candidates if not (x in seen or seen.add(x))]
